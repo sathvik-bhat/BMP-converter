@@ -22,12 +22,13 @@ struct Info_Header
     int important_colours;
 };
 
+struct Bitmap_Header header;
+struct Info_Header h;
+
 void read_source()
 {
     FILE *fp = fopen("sample.bmp", "rb");
 
-    struct Bitmap_Header header;
-    struct Info_Header h;
     fread(header.signature,2,1,fp);
     fread(&header.file_size,4,1,fp);
     fread(&header.reserved,4,1,fp);
@@ -44,13 +45,41 @@ void read_source()
     fread(&h.colours_used, 4, 1,fp);
     fread(&h.important_colours, 4, 1,fp);
 
+    printf("%c%c %u %d %d\n", header.signature[0],header.signature[1],header.file_size,header.reserved,h.bits_per_pixel);
+
     fclose(fp);
 }
+
+void read_output()
+{
+    FILE *fpo = fopen("output.bmp", "rb");
+
+    fread(header.signature,2,1,fpo);
+    fread(&header.file_size,4,1,fpo);
+    fread(&header.reserved,4,1,fpo);
+    fread(&header.data_offset,4,1,fpo);
+    fread(&h.size, 4, 1, fpo);
+    fread(&h.width, 4, 1,fpo);
+    fread(&h.height, 4, 1,fpo);
+    fread(&h.planes, 2, 1,fpo);
+    fread(&h.bits_per_pixel,2,1,fpo);
+    fread(&h.compression, 4, 1,fpo);
+    fread(&h.image_size, 4, 1,fpo);
+    fread(&h.X_pixels_per_m, 4, 1,fpo);
+    fread(&h.Y_pixels_per_m, 4, 1,fpo);
+    fread(&h.colours_used, 4, 1,fpo);
+    fread(&h.important_colours, 4, 1,fpo);
+
+    printf("%c%c %u %d %d \n", header.signature[0],header.signature[1],header.file_size,header.reserved,h.bits_per_pixel);
+
+    fclose(fpo);
+}
+
 
 const int bmpfileheaderSize = 14;
 const int bmpinfoheaderSize = 40;
 
-void create_imageheader(struct Bitmap_Header header, struct Info_Header h)
+void create_imageheader() //struct Bitmap_Header header, struct Info_Header h
 {
 	// unsigned char bmpfileheader[14] = {
 	// 				'B', 'M',	// signature
@@ -91,7 +120,6 @@ void create_imageheader(struct Bitmap_Header header, struct Info_Header h)
     fwrite(&h.colours_used, 4, 1,fpf);
     fwrite(&h.important_colours, 4, 1,fpf);
 
-
 	// fwrite(bmpfileheader, 1, bmpfileheaderSize, fpf);
 	// fwrite(bmpinfoheader, 1, bmpinfoheaderSize, fpf);
 
@@ -100,8 +128,8 @@ void create_imageheader(struct Bitmap_Header header, struct Info_Header h)
 
 int main()
 {
-    struct Bitmap_Header header; struct Info_Header h;
+    // struct Bitmap_Header header; struct Info_Header h;
     read_source();
-    create_imageheader(header, h);
-
+    create_imageheader();
+    read_output();
 }
