@@ -126,6 +126,19 @@ void create_imageheader() //struct Bitmap_Header header, struct Info_Header h
 	fclose(fpf);
 }
 
+void Copy_pixels_to_destination(int arr[h.height][h.width])
+{
+    FILE *fpf = fopen("output.bmp", "wb");
+    fseek(fpf,0,header.data_offset);
+    for(int i=0; i<h.height; i++)
+    {
+        for (int j=0; j<h.width; j++)
+        {
+            fwrite(&arr[i][j],3,1,fpf);
+        }
+    }
+}
+
 int main()
 {
     // struct Bitmap_Header header; struct Info_Header h;
