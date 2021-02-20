@@ -98,7 +98,7 @@ void Copy_pixels_to_destination(FILE *fpf)
     fseek(fpf,0,header.data_offset);
     for(int i=h.height-1; i>=0; i--)
     {
-            fwrite(i1.rgb[i],h.width,1,fpf);
+            fwrite(i1.rgb[i],h.width,3,fpf);
     }
 }
 
