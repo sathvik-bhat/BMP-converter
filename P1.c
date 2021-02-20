@@ -11,6 +11,7 @@ struct Image_24_bit i1;
 
 void Image_pixel(FILE *fp, int height, int width)
 {	
+    fseek(fp,0,header.data_offset);
 	int i;
 	read_pixel.g = (struct Greyscale**) malloc(height*sizeof(void*));
 	read_pixel.height = height;
@@ -23,13 +24,10 @@ void Image_pixel(FILE *fp, int height, int width)
 
 void Gray_to_rgb(int height,int width)
 {
-    i1.rgb[height][width].Red;
-	i1.rgb[height][width].Green;
-	i1.rgb[height][width].Blue;
-	height = h.height;
-	width= h.width;	
+    i1.rgb = (struct RGB**) malloc(3*width*sizeof(void*));
 	for(int i=(height-1);i>=0;i--)
 	{		
+        i1.rgb[i] = (struct RGB*) malloc(width*(sizeof(struct RGB)));
 		for(int j=width-1;j>=0;j--)
 		{		i1.rgb[i][j].Red=read_pixel.g[i][j].greyscale;
 				i1.rgb[i][j].Green=read_pixel.g[i][j].greyscale;
@@ -60,9 +58,6 @@ void read_source(FILE* fp)
     fseek(fp,header.data_offset,SEEK_SET);
 }
 
-// const int bmpfileheaderSize = 14;
-// const int bmpinfoheaderSize = 40;
-
 void create_imageheader(FILE *fpf) 
 {
     int a=24;
@@ -85,14 +80,10 @@ void create_imageheader(FILE *fpf)
 
 void Copy_pixels_to_destination(FILE *fpf)
 {
-    
     fseek(fpf,0,header.data_offset);
-    for(int i=0; i<h.height; i++)
+    for(int i=h.height-1; i>=0; i--)
     {
-        // for (int j=0; j<h.width; j++)
-        // {
-            fwrite(read_pixel.g[i],h.width,sizeof(struct Greyscale),fpf);
-        // }
+            fwrite(i1.rgb[i],h.width,3,fpf);
     }
 }
 
@@ -103,6 +94,6 @@ int main()
     read_source(fp);
     create_imageheader(fpf);
     Image_pixel(fp,h.height,h.width);
-    // Gray_to_rgb(h.height,h.width);
+    Gray_to_rgb(h.height,h.width);
     Copy_pixels_to_destination(fpf);
 }
