@@ -65,7 +65,6 @@ void read_source(FILE* fp)
     fread(&h.colours_used, 4, 1,fp);
     fread(&h.important_colours, 4, 1,fp);
 
-    printf("%c%c %u %d %d\n", header.signature[0],header.signature[1],header.file_size,header.reserved,h.bits_per_pixel);
 }
 
 void create_imageheader(FILE *fpf) 
@@ -92,16 +91,18 @@ void create_imageheader(FILE *fpf)
 void Copy_pixels_to_destination(FILE *fpf)
 {
     fseek(fpf,header.data_offset,0);
-    for(int i=h.height-1; i>=0; i--)
+    for(int i=0; i<h.height; i++)
     {
             fwrite(i1.rgb[i],h.width,3,fpf);
     }
 }
 
-
 int main()
 {
-    FILE *fp = fopen("sample2.bmp", "rb");
+    char path[100];
+    printf("Enter name or path of source file: ");
+    scanf("%s",path);
+    FILE *fp = fopen(path, "rb");
     FILE *fpf = fopen("output.bmp", "wb");
     read_source(fp);
     create_imageheader(fpf);
