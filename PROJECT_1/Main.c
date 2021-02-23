@@ -7,6 +7,7 @@ struct Info_Header h;
 int main()
 {
     char path[255];
+    printf("Enter Name or Path of Image: ");
     scanf("%s",path);
     FILE *fp = fopen(path, "rb");
     FILE *fpf = fopen("output.bmp", "wb");
@@ -19,7 +20,7 @@ int main()
     printf("\nConversion is successful. Target image is created in current directory with the name output.bmp\n");
     printf("\nSAMPLE IMAGE DATA\n");
     fopen("sample2.bmp","rb");
-    Print_header_detailst(fp);
+    Print_header_details(fp);
     printf("\nOUTPUT IMAGE DATA\n");
     FILE *fps = fopen("output.bmp","rb");
     Print_header_details(fps);
