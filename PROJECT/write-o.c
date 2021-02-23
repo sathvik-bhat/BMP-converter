@@ -6,7 +6,7 @@ struct Info_Header h;
 void Copy_pixels_to_destination(FILE *fpf)
 {
     fseek(fpf,header.data_offset,0);
-    for(int i=h.height-1; i>=0; i--)
+    for(int i=0; i<h.height; i++)
     {
             fwrite(i1.rgb[i],h.width,3,fpf);
     }

@@ -31,5 +31,4 @@ void read_source(FILE* fp)
     fread(&h.colours_used, 4, 1,fp);
     fread(&h.important_colours, 4, 1,fp);
 
-    printf("%c%c %u %d %d\n", header.signature[0],header.signature[1],header.file_size,header.reserved,h.bits_per_pixel);
 }
