@@ -20,6 +20,12 @@ void Image_pixel(FILE *fp, int height, int width)
 	{	read_pixel.g[i] = (struct Greyscale*) malloc(width*sizeof(void*));
 		fread(read_pixel.g[i],h.width,1,fp);
 	}
+	
+	free(read_pixel.g);
+        for(int i = (height-1);i>=0;i--)
+        {
+            free(read_pixel.g[i]);
+        }
 }
 
 void Gray_to_rgb(int height,int width)
@@ -35,7 +41,29 @@ void Gray_to_rgb(int height,int width)
 				i1.rgb[i][j].Red=read_pixel.g[i][j].greyscale;
 		}
 	}
+	
+	free(i1.rgb);
+        for(int i=0;i<height;i++)
+        {
+            free(i1.rgb);
+        }
 }
+
+/*
+void free_Image(struct Image_8_bit, struct Image_24_bit)
+{
+    free(read_pixel.g);
+    for(int i = (height-1);i>=0;i--)
+    {
+        free(read_pixel.g[i]);
+    }
+    
+    free(i1.rgb);
+    for(int i=0;i<height;i++)
+    {
+        free(i1.rgb);
+    }
+} */
 
 void read_source(FILE* fp)
 {
