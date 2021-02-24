@@ -8,8 +8,8 @@ void Gray_to_rgb(int height,int width)
     i1.rgb = (struct RGB**) malloc(3*height*sizeof(void*));
 	for(int i=0;i<height;i++)
 	{		
-        i1.rgb[i] = (struct RGB*) malloc(3*width*sizeof(void*));
-		for(int j=0 ;j<width ;j++)
+        i1.rgb[i] = (struct RGB*) malloc(3*(read_pixel.width)*sizeof(void*));
+		for(int j=0 ;j<read_pixel.width ;j++)
 		{
         		i1.rgb[i][j].Blue=read_pixel.g[i][j].greyscale;
 				i1.rgb[i][j].Green=read_pixel.g[i][j].greyscale;
