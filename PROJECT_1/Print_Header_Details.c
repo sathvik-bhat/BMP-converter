@@ -1,3 +1,4 @@
+/* prints details of the image of which pointer is passed */
 #include<stdio.h>
 #include<stdlib.h>
 #include"structures.h"

@@ -7,7 +7,7 @@ struct Bitmap_Header
     int data_offset; 	// specifies the offset in bytes from the bitmapfileheader to the bitmap bits
 };
 
-/* Bitmap Information header */
+/* Bitmap Information header is of the size 40 bytes*/
 struct Info_Header
 {
     unsigned int size;	// size of the info header

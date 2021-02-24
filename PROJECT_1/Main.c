@@ -23,9 +23,9 @@ int main()
     printf("\nConversion is successful. Target image is created in current directory with the name output.bmp\n");
     printf("\nSAMPLE IMAGE DATA\n");
     
-    fopen("sample2.bmp","rb");
-    Print_header_details(fp);
+    fopen(path,"rb");  // open the source file in read mode
+    Print_header_details(fp);  // prints the header details of the source file
     printf("\nOUTPUT IMAGE DATA\n");
-    FILE *fps = fopen("output.bmp","rb");
-    Print_header_details(fps);
+    FILE *fps = fopen("output.bmp","rb");  // opens the target file in read mode
+    Print_header_details(fps);  // prints the header details of the target file
 }

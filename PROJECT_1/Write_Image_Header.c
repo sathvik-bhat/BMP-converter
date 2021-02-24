@@ -9,10 +9,12 @@ void create_imageheader(FILE *fpf)
 {
     int a=24;     
     int b=pow(2,24);
+    int width=(h.width%4==0)?(h.width):(h.width+4-h.width%4);
+    int c=(h.height*width*3) + 54;
     
     /* Writing the Bitmap header of destination file */
     fwrite(header.signature,2,1,fpf);   // writing the signature of BMP file
-    fwrite(&header.file_size,4,1,fpf);  // size of the file
+    fwrite(&c,4,1,fpf);  // size of the file
     fwrite(&header.reserved,4,1,fpf);   
     fwrite(&header.data_offset,4,1,fpf);    // write the offset data pixel byte
     
